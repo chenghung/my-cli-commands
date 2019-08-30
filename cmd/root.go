@@ -8,12 +8,12 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "go_command",
+	Use:   "tt",
 	Short: "",
 	Long:  "",
 }
 
-// Execute hello command
+// Execute tt command
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
