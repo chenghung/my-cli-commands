@@ -43,16 +43,23 @@ var clearCmd = &cobra.Command{
 	},
 }
 
+// flag vars
+var deleteTorrent bool;
+
 func init() {
 	rootCmd.AddCommand(clearCmd)
 
-	clearCmd.Flags().Bool("torrent", true, "clear *.torrent files")
+	clearCmd.Flags().BoolVar(&deleteTorrent, "torrent", false, "clear *.torrent files")
 }
 
 func isDeleteable(path Path) bool {
 	fileExt := filepath.Ext(path)
 
-	return fileExt == ".torrent"
+	if deleteTorrent && fileExt == ".torrent" {
+		return true
+	}
+
+	return false
 }
 
 func getFilePath(dir string, file os.FileInfo) Path {
