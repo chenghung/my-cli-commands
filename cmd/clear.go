@@ -45,11 +45,16 @@ var clearCmd = &cobra.Command{
 
 // flag vars
 var deleteTorrent bool;
+var deleteCompression bool;
+
+// constants
+var compressionExts = []string{".7z", ".gz", ".rar", ".zip"}
 
 func init() {
 	rootCmd.AddCommand(clearCmd)
 
 	clearCmd.Flags().BoolVar(&deleteTorrent, "torrent", false, "clear *.torrent files")
+	clearCmd.Flags().BoolVar(&deleteCompression, "comp", false, "clear *.(gz|zip|rar|7z) files")
 }
 
 func isDeleteable(path Path) bool {
@@ -57,6 +62,14 @@ func isDeleteable(path Path) bool {
 
 	if deleteTorrent && fileExt == ".torrent" {
 		return true
+	}
+
+	if deleteCompression {
+		for _, ext := range compressionExts {
+			if ext == fileExt {
+				return true
+			}
+		}
 	}
 
 	return false
